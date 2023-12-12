@@ -6,7 +6,7 @@
 This is a sample project to use projen to create CDK Construct and publish to registries like `npm` and `pypi`.
 
 ## Usage
-```typescript
+```ts
     const app = new cdk.App();
     const stack = new cdk.Stack(app, "MyStack");
     new MyEcs(stack, "MyEcs");
