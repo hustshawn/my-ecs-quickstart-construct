@@ -1,0 +1,293 @@
+{
+  "version": "35.0.0",
+  "artifacts": {
+    "MyStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "MyStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "MyStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "MyStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/60b143e69c7af3f71d9e3a2092b68f37b067a72d85003e6c477152141f949fab.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "MyStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "MyStack.assets"
+      ],
+      "metadata": {
+        "/MyStack/MyEcs/vpc/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcBA534860"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/PublicSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcPublicSubnet1Subnet6682D680"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/PublicSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcPublicSubnet1RouteTable98382F33"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/PublicSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcPublicSubnet1RouteTableAssociation887B33FF"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/PublicSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcPublicSubnet1DefaultRoute02124361"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/PublicSubnet1/EIP": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcPublicSubnet1EIPCBB9A0AF"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/PublicSubnet1/NATGateway": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcPublicSubnet1NATGateway6F0A196C"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/PublicSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcPublicSubnet2Subnet909DE44C"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/PublicSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcPublicSubnet2RouteTable6A9108CC"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/PublicSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcPublicSubnet2RouteTableAssociationD47EE193"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/PublicSubnet2/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcPublicSubnet2DefaultRoute27CE5F20"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/PrivateSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcPrivateSubnet1SubnetA5D8B8D2"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/PrivateSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcPrivateSubnet1RouteTable3BCDD26B"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/PrivateSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcPrivateSubnet1RouteTableAssociation53CF163B"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/PrivateSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcPrivateSubnet1DefaultRoute75EB1213"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/PrivateSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcPrivateSubnet2Subnet0BADFA4F"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/PrivateSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcPrivateSubnet2RouteTable9471C98A"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/PrivateSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcPrivateSubnet2RouteTableAssociation0512FA33"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/PrivateSubnet2/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcPrivateSubnet2DefaultRoute56161911"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/IGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcIGW0A0337DE"
+          }
+        ],
+        "/MyStack/MyEcs/vpc/VPCGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsvpcVPCGW34FFC593"
+          }
+        ],
+        "/MyStack/MyEcs/Service/LB/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsServiceLBA41CFDC3"
+          }
+        ],
+        "/MyStack/MyEcs/Service/LB/SecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsServiceLBSecurityGroupCA7B46A0"
+          }
+        ],
+        "/MyStack/MyEcs/Service/LB/SecurityGroup/to MyStackMyEcsServiceSecurityGroupA07C1288:80": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsServiceLBSecurityGrouptoMyStackMyEcsServiceSecurityGroupA07C1288806EFCA631"
+          }
+        ],
+        "/MyStack/MyEcs/Service/LB/PublicListener/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsServiceLBPublicListener5C239652"
+          }
+        ],
+        "/MyStack/MyEcs/Service/LB/PublicListener/ECSGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsServiceLBPublicListenerECSGroup7E0C12ED"
+          }
+        ],
+        "/MyStack/MyEcs/Service/LoadBalancerDNS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsServiceLoadBalancerDNS4A3F23C2"
+          }
+        ],
+        "/MyStack/MyEcs/Service/ServiceURL": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsServiceServiceURL43D3A8FE"
+          }
+        ],
+        "/MyStack/MyEcs/Service/TaskDef/TaskRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsServiceTaskDefTaskRole51C0BBD5"
+          }
+        ],
+        "/MyStack/MyEcs/Service/TaskDef/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsServiceTaskDefE62F59D9"
+          }
+        ],
+        "/MyStack/MyEcs/Service/TaskDef/web/LogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsServiceTaskDefwebLogGroup857FEC0E"
+          }
+        ],
+        "/MyStack/MyEcs/Service/TaskDef/ExecutionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsServiceTaskDefExecutionRole32F22841"
+          }
+        ],
+        "/MyStack/MyEcs/Service/TaskDef/ExecutionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsServiceTaskDefExecutionRoleDefaultPolicy981F02A3"
+          }
+        ],
+        "/MyStack/MyEcs/Service/Service/Service": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsService281B38A2"
+          }
+        ],
+        "/MyStack/MyEcs/Service/Service/SecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsServiceSecurityGroupC238E744"
+          }
+        ],
+        "/MyStack/MyEcs/Service/Service/SecurityGroup/from MyStackMyEcsServiceLBSecurityGroupBA6201DE:80": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MyEcsServiceSecurityGroupfromMyStackMyEcsServiceLBSecurityGroupBA6201DE806E9470C4"
+          }
+        ],
+        "/MyStack/EcsDefaultClusterMnL3mNNYNvpc/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EcsDefaultClusterMnL3mNNYNvpcFC68BC3A"
+          }
+        ],
+        "/MyStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/MyStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/MyStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/MyStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "MyStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}
