@@ -17,6 +17,7 @@
     "package": "npx projen package",
     "package-all": "npx projen package-all",
     "package:js": "npx projen package:js",
+    "package:python": "npx projen package:python",
     "post-compile": "npx projen post-compile",
     "post-upgrade": "npx projen post-upgrade",
     "pre-compile": "npx projen pre-compile",
@@ -35,15 +36,16 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
-    "@types/mocha": "^10.0.6",
     "@types/node": "^18",
     "@typescript-eslint/eslint-plugin": "^6",
     "@typescript-eslint/parser": "^6",
     "aws-cdk-lib": "2.114.1",
     "constructs": "10.0.5",
     "eslint": "^8",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-prettier": "^5.0.1",
     "jest": "^29.7.0",
     "jest-junit": "^15",
     "jsii": "~5.0.0",
@@ -51,6 +53,7 @@
     "jsii-docgen": "^10.2.5",
     "jsii-pacmak": "^1.93.0",
     "jsii-rosetta": "~5.0.0",
+    "prettier": "^3.1.1",
     "projen": "^0.77.6",
     "standard-version": "^9",
     "ts-jest": "^29.1.1",
@@ -111,7 +114,12 @@
   "stability": "stable",
   "jsii": {
     "outdir": "dist",
-    "targets": {},
+    "targets": {
+      "python": {
+        "distName": "demo-awscdk-construct",
+        "module": "demo_awscdk_construct"
+      }
+    },
     "tsc": {
       "outDir": "lib",
       "rootDir": "src"
