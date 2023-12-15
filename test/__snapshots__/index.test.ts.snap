@@ -1,0 +1,753 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyEcs Match snapshot 1`] = `
+{
+  "Outputs": {
+    "MyEcsServiceLoadBalancerDNS4A3F23C2": {
+      "Value": {
+        "Fn::GetAtt": [
+          "MyEcsServiceLBA41CFDC3",
+          "DNSName",
+        ],
+      },
+    },
+    "MyEcsServiceServiceURL43D3A8FE": {
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "http://",
+            {
+              "Fn::GetAtt": [
+                "MyEcsServiceLBA41CFDC3",
+                "DNSName",
+              ],
+            },
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "EcsDefaultClusterMnL3mNNYNvpcFC68BC3A": {
+      "Type": "AWS::ECS::Cluster",
+    },
+    "MyEcsService281B38A2": {
+      "DependsOn": [
+        "MyEcsServiceLBPublicListenerECSGroup7E0C12ED",
+        "MyEcsServiceLBPublicListener5C239652",
+        "MyEcsServiceTaskDefTaskRole51C0BBD5",
+      ],
+      "Properties": {
+        "Cluster": {
+          "Ref": "EcsDefaultClusterMnL3mNNYNvpcFC68BC3A",
+        },
+        "DeploymentConfiguration": {
+          "Alarms": {
+            "AlarmNames": [],
+            "Enable": false,
+            "Rollback": false,
+          },
+          "MaximumPercent": 200,
+          "MinimumHealthyPercent": 50,
+        },
+        "EnableECSManagedTags": false,
+        "HealthCheckGracePeriodSeconds": 60,
+        "LaunchType": "FARGATE",
+        "LoadBalancers": [
+          {
+            "ContainerName": "web",
+            "ContainerPort": 80,
+            "TargetGroupArn": {
+              "Ref": "MyEcsServiceLBPublicListenerECSGroup7E0C12ED",
+            },
+          },
+        ],
+        "NetworkConfiguration": {
+          "AwsvpcConfiguration": {
+            "AssignPublicIp": "DISABLED",
+            "SecurityGroups": [
+              {
+                "Fn::GetAtt": [
+                  "MyEcsServiceSecurityGroupC238E744",
+                  "GroupId",
+                ],
+              },
+            ],
+            "Subnets": [
+              {
+                "Ref": "MyEcsvpcPrivateSubnet1SubnetA5D8B8D2",
+              },
+              {
+                "Ref": "MyEcsvpcPrivateSubnet2Subnet0BADFA4F",
+              },
+            ],
+          },
+        },
+        "TaskDefinition": {
+          "Ref": "MyEcsServiceTaskDefE62F59D9",
+        },
+      },
+      "Type": "AWS::ECS::Service",
+    },
+    "MyEcsServiceLBA41CFDC3": {
+      "DependsOn": [
+        "MyEcsvpcPublicSubnet1DefaultRoute02124361",
+        "MyEcsvpcPublicSubnet1RouteTableAssociation887B33FF",
+        "MyEcsvpcPublicSubnet2DefaultRoute27CE5F20",
+        "MyEcsvpcPublicSubnet2RouteTableAssociationD47EE193",
+      ],
+      "Properties": {
+        "LoadBalancerAttributes": [
+          {
+            "Key": "deletion_protection.enabled",
+            "Value": "false",
+          },
+        ],
+        "Scheme": "internet-facing",
+        "SecurityGroups": [
+          {
+            "Fn::GetAtt": [
+              "MyEcsServiceLBSecurityGroupCA7B46A0",
+              "GroupId",
+            ],
+          },
+        ],
+        "Subnets": [
+          {
+            "Ref": "MyEcsvpcPublicSubnet1Subnet6682D680",
+          },
+          {
+            "Ref": "MyEcsvpcPublicSubnet2Subnet909DE44C",
+          },
+        ],
+        "Type": "application",
+      },
+      "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+    },
+    "MyEcsServiceLBPublicListener5C239652": {
+      "Properties": {
+        "DefaultActions": [
+          {
+            "TargetGroupArn": {
+              "Ref": "MyEcsServiceLBPublicListenerECSGroup7E0C12ED",
+            },
+            "Type": "forward",
+          },
+        ],
+        "LoadBalancerArn": {
+          "Ref": "MyEcsServiceLBA41CFDC3",
+        },
+        "Port": 80,
+        "Protocol": "HTTP",
+      },
+      "Type": "AWS::ElasticLoadBalancingV2::Listener",
+    },
+    "MyEcsServiceLBPublicListenerECSGroup7E0C12ED": {
+      "Properties": {
+        "Port": 80,
+        "Protocol": "HTTP",
+        "TargetGroupAttributes": [
+          {
+            "Key": "stickiness.enabled",
+            "Value": "false",
+          },
+        ],
+        "TargetType": "ip",
+        "VpcId": {
+          "Ref": "MyEcsvpcBA534860",
+        },
+      },
+      "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+    },
+    "MyEcsServiceLBSecurityGroupCA7B46A0": {
+      "Properties": {
+        "GroupDescription": "Automatically created Security Group for ELB MyStackMyEcsServiceLB8E50D9C5",
+        "SecurityGroupIngress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow from anyone on port 80",
+            "FromPort": 80,
+            "IpProtocol": "tcp",
+            "ToPort": 80,
+          },
+        ],
+        "VpcId": {
+          "Ref": "MyEcsvpcBA534860",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "MyEcsServiceLBSecurityGrouptoMyStackMyEcsServiceSecurityGroupA07C1288806EFCA631": {
+      "Properties": {
+        "Description": "Load balancer to target",
+        "DestinationSecurityGroupId": {
+          "Fn::GetAtt": [
+            "MyEcsServiceSecurityGroupC238E744",
+            "GroupId",
+          ],
+        },
+        "FromPort": 80,
+        "GroupId": {
+          "Fn::GetAtt": [
+            "MyEcsServiceLBSecurityGroupCA7B46A0",
+            "GroupId",
+          ],
+        },
+        "IpProtocol": "tcp",
+        "ToPort": 80,
+      },
+      "Type": "AWS::EC2::SecurityGroupEgress",
+    },
+    "MyEcsServiceSecurityGroupC238E744": {
+      "DependsOn": [
+        "MyEcsServiceTaskDefTaskRole51C0BBD5",
+      ],
+      "Properties": {
+        "GroupDescription": "MyStack/MyEcs/Service/Service/SecurityGroup",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "VpcId": {
+          "Ref": "MyEcsvpcBA534860",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "MyEcsServiceSecurityGroupfromMyStackMyEcsServiceLBSecurityGroupBA6201DE806E9470C4": {
+      "DependsOn": [
+        "MyEcsServiceTaskDefTaskRole51C0BBD5",
+      ],
+      "Properties": {
+        "Description": "Load balancer to target",
+        "FromPort": 80,
+        "GroupId": {
+          "Fn::GetAtt": [
+            "MyEcsServiceSecurityGroupC238E744",
+            "GroupId",
+          ],
+        },
+        "IpProtocol": "tcp",
+        "SourceSecurityGroupId": {
+          "Fn::GetAtt": [
+            "MyEcsServiceLBSecurityGroupCA7B46A0",
+            "GroupId",
+          ],
+        },
+        "ToPort": 80,
+      },
+      "Type": "AWS::EC2::SecurityGroupIngress",
+    },
+    "MyEcsServiceTaskDefE62F59D9": {
+      "Properties": {
+        "ContainerDefinitions": [
+          {
+            "Essential": true,
+            "Image": "nginx",
+            "LogConfiguration": {
+              "LogDriver": "awslogs",
+              "Options": {
+                "awslogs-group": {
+                  "Ref": "MyEcsServiceTaskDefwebLogGroup857FEC0E",
+                },
+                "awslogs-region": {
+                  "Ref": "AWS::Region",
+                },
+                "awslogs-stream-prefix": "Service",
+              },
+            },
+            "Name": "web",
+            "PortMappings": [
+              {
+                "ContainerPort": 80,
+                "Protocol": "tcp",
+              },
+            ],
+          },
+        ],
+        "Cpu": "256",
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
+            "MyEcsServiceTaskDefExecutionRole32F22841",
+            "Arn",
+          ],
+        },
+        "Family": "MyStackMyEcsServiceTaskDefD523B3F5",
+        "Memory": "512",
+        "NetworkMode": "awsvpc",
+        "RequiresCompatibilities": [
+          "FARGATE",
+        ],
+        "TaskRoleArn": {
+          "Fn::GetAtt": [
+            "MyEcsServiceTaskDefTaskRole51C0BBD5",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ECS::TaskDefinition",
+    },
+    "MyEcsServiceTaskDefExecutionRole32F22841": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ecs-tasks.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "MyEcsServiceTaskDefExecutionRoleDefaultPolicy981F02A3": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "MyEcsServiceTaskDefwebLogGroup857FEC0E",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "MyEcsServiceTaskDefExecutionRoleDefaultPolicy981F02A3",
+        "Roles": [
+          {
+            "Ref": "MyEcsServiceTaskDefExecutionRole32F22841",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "MyEcsServiceTaskDefTaskRole51C0BBD5": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ecs-tasks.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "MyEcsServiceTaskDefwebLogGroup857FEC0E": {
+      "DeletionPolicy": "Retain",
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "MyEcsvpcBA534860": {
+      "Properties": {
+        "CidrBlock": "10.0.0.0/16",
+        "EnableDnsHostnames": true,
+        "EnableDnsSupport": true,
+        "InstanceTenancy": "default",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "MyStack/MyEcs/vpc",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::VPC",
+    },
+    "MyEcsvpcIGW0A0337DE": {
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "MyStack/MyEcs/vpc",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::InternetGateway",
+    },
+    "MyEcsvpcPrivateSubnet1DefaultRoute75EB1213": {
+      "Properties": {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "MyEcsvpcPublicSubnet1NATGateway6F0A196C",
+        },
+        "RouteTableId": {
+          "Ref": "MyEcsvpcPrivateSubnet1RouteTable3BCDD26B",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "MyEcsvpcPrivateSubnet1RouteTable3BCDD26B": {
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "MyStack/MyEcs/vpc/PrivateSubnet1",
+          },
+        ],
+        "VpcId": {
+          "Ref": "MyEcsvpcBA534860",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "MyEcsvpcPrivateSubnet1RouteTableAssociation53CF163B": {
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "MyEcsvpcPrivateSubnet1RouteTable3BCDD26B",
+        },
+        "SubnetId": {
+          "Ref": "MyEcsvpcPrivateSubnet1SubnetA5D8B8D2",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "MyEcsvpcPrivateSubnet1SubnetA5D8B8D2": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
+            0,
+            {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.128.0/18",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Private",
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private",
+          },
+          {
+            "Key": "Name",
+            "Value": "MyStack/MyEcs/vpc/PrivateSubnet1",
+          },
+        ],
+        "VpcId": {
+          "Ref": "MyEcsvpcBA534860",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "MyEcsvpcPrivateSubnet2DefaultRoute56161911": {
+      "Properties": {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "MyEcsvpcPublicSubnet1NATGateway6F0A196C",
+        },
+        "RouteTableId": {
+          "Ref": "MyEcsvpcPrivateSubnet2RouteTable9471C98A",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "MyEcsvpcPrivateSubnet2RouteTable9471C98A": {
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "MyStack/MyEcs/vpc/PrivateSubnet2",
+          },
+        ],
+        "VpcId": {
+          "Ref": "MyEcsvpcBA534860",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "MyEcsvpcPrivateSubnet2RouteTableAssociation0512FA33": {
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "MyEcsvpcPrivateSubnet2RouteTable9471C98A",
+        },
+        "SubnetId": {
+          "Ref": "MyEcsvpcPrivateSubnet2Subnet0BADFA4F",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "MyEcsvpcPrivateSubnet2Subnet0BADFA4F": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
+            1,
+            {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.192.0/18",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Private",
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private",
+          },
+          {
+            "Key": "Name",
+            "Value": "MyStack/MyEcs/vpc/PrivateSubnet2",
+          },
+        ],
+        "VpcId": {
+          "Ref": "MyEcsvpcBA534860",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "MyEcsvpcPublicSubnet1DefaultRoute02124361": {
+      "DependsOn": [
+        "MyEcsvpcVPCGW34FFC593",
+      ],
+      "Properties": {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "MyEcsvpcIGW0A0337DE",
+        },
+        "RouteTableId": {
+          "Ref": "MyEcsvpcPublicSubnet1RouteTable98382F33",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "MyEcsvpcPublicSubnet1EIPCBB9A0AF": {
+      "Properties": {
+        "Domain": "vpc",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "MyStack/MyEcs/vpc/PublicSubnet1",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::EIP",
+    },
+    "MyEcsvpcPublicSubnet1NATGateway6F0A196C": {
+      "DependsOn": [
+        "MyEcsvpcPublicSubnet1DefaultRoute02124361",
+        "MyEcsvpcPublicSubnet1RouteTableAssociation887B33FF",
+      ],
+      "Properties": {
+        "AllocationId": {
+          "Fn::GetAtt": [
+            "MyEcsvpcPublicSubnet1EIPCBB9A0AF",
+            "AllocationId",
+          ],
+        },
+        "SubnetId": {
+          "Ref": "MyEcsvpcPublicSubnet1Subnet6682D680",
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "MyStack/MyEcs/vpc/PublicSubnet1",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::NatGateway",
+    },
+    "MyEcsvpcPublicSubnet1RouteTable98382F33": {
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "MyStack/MyEcs/vpc/PublicSubnet1",
+          },
+        ],
+        "VpcId": {
+          "Ref": "MyEcsvpcBA534860",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "MyEcsvpcPublicSubnet1RouteTableAssociation887B33FF": {
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "MyEcsvpcPublicSubnet1RouteTable98382F33",
+        },
+        "SubnetId": {
+          "Ref": "MyEcsvpcPublicSubnet1Subnet6682D680",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "MyEcsvpcPublicSubnet1Subnet6682D680": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
+            0,
+            {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.0.0/18",
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public",
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public",
+          },
+          {
+            "Key": "Name",
+            "Value": "MyStack/MyEcs/vpc/PublicSubnet1",
+          },
+        ],
+        "VpcId": {
+          "Ref": "MyEcsvpcBA534860",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "MyEcsvpcPublicSubnet2DefaultRoute27CE5F20": {
+      "DependsOn": [
+        "MyEcsvpcVPCGW34FFC593",
+      ],
+      "Properties": {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "MyEcsvpcIGW0A0337DE",
+        },
+        "RouteTableId": {
+          "Ref": "MyEcsvpcPublicSubnet2RouteTable6A9108CC",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "MyEcsvpcPublicSubnet2RouteTable6A9108CC": {
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "MyStack/MyEcs/vpc/PublicSubnet2",
+          },
+        ],
+        "VpcId": {
+          "Ref": "MyEcsvpcBA534860",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "MyEcsvpcPublicSubnet2RouteTableAssociationD47EE193": {
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "MyEcsvpcPublicSubnet2RouteTable6A9108CC",
+        },
+        "SubnetId": {
+          "Ref": "MyEcsvpcPublicSubnet2Subnet909DE44C",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "MyEcsvpcPublicSubnet2Subnet909DE44C": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
+            1,
+            {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.64.0/18",
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public",
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public",
+          },
+          {
+            "Key": "Name",
+            "Value": "MyStack/MyEcs/vpc/PublicSubnet2",
+          },
+        ],
+        "VpcId": {
+          "Ref": "MyEcsvpcBA534860",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "MyEcsvpcVPCGW34FFC593": {
+      "Properties": {
+        "InternetGatewayId": {
+          "Ref": "MyEcsvpcIGW0A0337DE",
+        },
+        "VpcId": {
+          "Ref": "MyEcsvpcBA534860",
+        },
+      },
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;

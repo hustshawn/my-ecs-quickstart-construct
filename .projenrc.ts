@@ -8,6 +8,9 @@ const project = new awscdk.AwsCdkConstructLibrary({
   name: "demo-awscdk-construct",
   projenrcTs: true,
   repositoryUrl: "https://github.com/hustshawn/my-ecs-quickstart-construct.git",
+  githubOptions: {
+    mergify: false,
+  },
   publishToPypi: {
     distName: "demo-awscdk-construct",
     module: "demo_awscdk_construct",
